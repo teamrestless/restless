@@ -10,15 +10,15 @@ config_version=5
 
 [application]
 
-config/name="restless"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/name="GSDtest"
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
-[dotnet]
+[filesystem]
 
-project/assembly_name="restless"
+import/blender/enabled=false
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/use_taa=true
