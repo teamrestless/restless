@@ -1,0 +1,82 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpj7tyqc8hjf7"]
+
+[ext_resource type="Script" uid="uid://def3g4r04vjtm" path="res://Scripts/main_menu.gd" id="1_po3fn"]
+[ext_resource type="Texture2D" uid="uid://bdsno6lik8qrw" path="res://icon.svg" id="2_5022o"]
+
+[node name="main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_po3fn")
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 66.0
+offset_right = 683.0
+offset_bottom = 264.0
+texture = ExtResource("2_5022o")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 298.0
+offset_right = 699.0
+offset_bottom = 361.0
+theme_override_font_sizes/font_size = 40
+text = "PLAY"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 367.0
+offset_right = 699.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 437.0
+offset_right = 699.0
+offset_bottom = 500.0
+theme_override_font_sizes/font_size = 40
+text = "CREDITS"
+
+[node name="Button4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 506.0
+offset_right = 699.0
+offset_bottom = 569.0
+theme_override_font_sizes/font_size = 40
+text = "QUIT"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1036.0
+offset_top = 615.0
+offset_right = 1232.0
+offset_bottom = 658.0
+text = "Made by test"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1110.0
+offset_top = 6.0
+offset_right = 1306.0
+offset_bottom = 49.0
+text = "v0.1"
+
+[connection signal="pressed" from="Button" to="." method="play"]
+[connection signal="pressed" from="Button4" to="." method="quit"]
