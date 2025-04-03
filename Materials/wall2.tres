@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cagyt23y4scnn"]
+
+[ext_resource type="Texture2D" uid="uid://cyxq76yh40pbf" path="res://Textures/wall_texture.png" id="1_bhwm2"]
+
+[resource]
+albedo_color = Color(0.802706, 5.48691e-05, 0.216795, 1)
+albedo_texture = ExtResource("1_bhwm2")
+uv1_scale = Vector3(10, 2, 1)

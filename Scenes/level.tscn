@@ -1,0 +1,256 @@
+[gd_scene load_steps=15 format=3 uid="uid://cmqbgxeacjba2"]
+
+[ext_resource type="PackedScene" uid="uid://crpyfywf0m12d" path="res://Scenes/player.tscn" id="1_4uc65"]
+[ext_resource type="PackedScene" uid="uid://chgwefogi66xi" path="res://Scenes/ui.tscn" id="1_q4ht2"]
+[ext_resource type="Material" uid="uid://cns3n00c48l54" path="res://Materials/floor.tres" id="2_wtm1s"]
+[ext_resource type="Material" uid="uid://8h5smqti2bgb" path="res://Materials/wall.tres" id="3_71uyo"]
+[ext_resource type="Material" uid="uid://cagyt23y4scnn" path="res://Materials/wall2.tres" id="4_thyeq"]
+[ext_resource type="PackedScene" uid="uid://dp0ulvt2h3ocl" path="res://Scenes/light.tscn" id="6_lawgn"]
+[ext_resource type="PackedScene" uid="uid://c4n3ylhpq5bsv" path="res://Scenes/flashlight.tscn" id="8_d1n8n"]
+[ext_resource type="PackedScene" uid="uid://drpe7ogujwyh5" path="res://Scenes/table.tscn" id="8_kmekp"]
+[ext_resource type="AudioStream" uid="uid://bhlp0rj4833du" path="res://Sounds/ambiance.mp3" id="9_hnbem"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m5sco"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_fujov"]
+sky_material = SubResource("ProceduralSkyMaterial_m5sco")
+
+[sub_resource type="Environment" id="Environment_8iden"]
+background_mode = 1
+sky = SubResource("Sky_fujov")
+tonemap_mode = 2
+glow_bloom = 0.62
+fog_enabled = true
+fog_light_energy = 0.24
+adjustment_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5mqv7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_s408h"]
+
+[node name="level" type="Node3D"]
+
+[node name="UI" parent="." instance=ExtResource("1_q4ht2")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8iden")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.994151, 0.0864784, -0.0646942, 5.23683e-08, 0.599024, 0.800731, 0.107999, -0.796048, 0.59552, 0.516499, 4.63041, -3.657)
+visible = false
+shadow_enabled = true
+
+[node name="player" parent="." instance=ExtResource("1_4uc65")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0103016, 1.54802, -11.2362)
+
+[node name="light" parent="." instance=ExtResource("6_lawgn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302692, 4.55026, -11.4861)
+
+[node name="floors_and_walls" type="Node3D" parent="."]
+
+[node name="floor" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/floor"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/floor"]
+material_override = ExtResource("2_wtm1s")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="ceiling" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 4.99, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/ceiling"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/ceiling"]
+material_override = ExtResource("2_wtm1s")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall2" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(7.81594, 0, 0, 0, 5, 0, 0, 0, 7.81594, -12.0681, 2.98093, 7.08903)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall2"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall2"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall11" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(7.81594, 0, 0, 0, 5, 0, 0, 0, 7.81594, -1.76997, 2.98093, 12.6882)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall11"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall11"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall12" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(7.81594, 0, 0, 0, 5, 0, 0, 0, 7.81594, 2.39714, 2.98093, 2.5067)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall12"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall12"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall13" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(-5.13825, 0, 0, 0, 5, 0, 0, 0, -5.13825, 4.94689, 2.98093, -6.9135)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall13"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall13"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall15" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(-5.13825, 0, 0, 0, 5, 0, 0, 0, -5.13825, -4.08363, 2.98093, -6.72206)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall15"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall15"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall10" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(7.81594, 0, 0, 0, 5, 0, 0, 0, 7.81594, -12.4219, 2.98093, -2.70964)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall10"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall10"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall14" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(7.81594, 0, 0, 0, 5, 0, 0, 0, 7.81594, 13.5339, 2.98093, 7.77834)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall14"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall14"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall17" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(7.81594, 0, 0, 0, 5, 0, 0, 0, 7.81594, 14.3794, 2.98093, -5.98732)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall17"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall17"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall3" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(0.8784, 0, 0, 0, 5, 0, 0, 0, 10, -4.11883, 2.98093, -9.91795)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall3"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall3"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall4" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(0.8784, 0, 0, 0, 5, 0, 0, 0, 10, 4.94926, 2.98093, -9.91795)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall4"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall4"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall16" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(-3.83961e-08, 0, 10, 0, 5, 0, -0.8784, 0, -4.37114e-07, 7.27753, 2.98093, 5.59673)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall16"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall16"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall5" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(-3.83961e-08, 0, 31.162, 0, 5, 0, -0.8784, 0, -1.36213e-06, -0.313923, 2.98093, -14.559)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall5"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall5"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall7" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(-3.83961e-08, 0, 31.162, 0, 5, 0, -0.8784, 0, -1.36213e-06, -0.313923, 2.98093, 14.4977)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall7"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall7"]
+material_override = ExtResource("4_thyeq")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall8" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(0.8784, 0, 0, 0, 5, 0, 0, 0, 31.162, 14.6014, 2.98093, -0.0464888)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall8"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall8"]
+material_override = ExtResource("3_71uyo")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="wall9" type="StaticBody3D" parent="floors_and_walls"]
+transform = Transform3D(0.8784, 0, 0, 0, 5, 0, 0, 0, 31.162, -14.5472, 2.98093, -0.0464888)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floors_and_walls/wall9"]
+shape = SubResource("BoxShape3D_5mqv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floors_and_walls/wall9"]
+material_override = ExtResource("4_thyeq")
+mesh = SubResource("BoxMesh_s408h")
+
+[node name="table" parent="." instance=ExtResource("8_kmekp")]
+transform = Transform3D(-0.00862187, 0, 0.999963, 0, 1, 0, -0.999963, 0, -0.00862187, 3.45576, 0.656764, -11.4302)
+
+[node name="flashlight" parent="." instance=ExtResource("8_d1n8n")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 3.11765, 1.25695, -11.5185)
+
+[node name="ambiance_sounds" type="Node3D" parent="."]
+
+[node name="ambiance" type="AudioStreamPlayer3D" parent="ambiance_sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.4508, 8.24214, 0)
+stream = ExtResource("9_hnbem")
+autoplay = true
+max_distance = 60.0
+
+[node name="ambiance2" type="AudioStreamPlayer3D" parent="ambiance_sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.8124, 8.24214, 0)
+stream = ExtResource("9_hnbem")
+pitch_scale = 0.8
+autoplay = true
+max_distance = 60.0
+
+[node name="ambiance3" type="AudioStreamPlayer3D" parent="ambiance_sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83299, 8.24214, 19.5051)
+stream = ExtResource("9_hnbem")
+pitch_scale = 0.6
+autoplay = true
+max_distance = 60.0
+
+[node name="ambiance4" type="AudioStreamPlayer3D" parent="ambiance_sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.83299, 8.24214, -26.0285)
+stream = ExtResource("9_hnbem")
+pitch_scale = 0.4
+autoplay = true
+max_distance = 60.0
