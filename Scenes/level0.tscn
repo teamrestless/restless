@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=4 uid="uid://cq5pvog1yjfyr"]
+[gd_scene load_steps=108 format=4 uid="uid://cq5pvog1yjfyr"]
 
 [ext_resource type="PackedScene" uid="uid://bu71ueljsosch" path="res://Scenes/ui.tscn" id="1_cywlo"]
 [ext_resource type="Texture2D" uid="uid://dnn7h06lk42k8" path="res://Interior Textures/Concrete.png" id="1_vvbs8"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cu33u87lly0ju" path="res://Interior Textures/BathroomFull_4.png" id="17_lk370"]
 [ext_resource type="Texture2D" uid="uid://me4ks4ico5yi" path="res://Interior Textures/BathroomFull_8.png" id="18_vpvdp"]
 [ext_resource type="Texture2D" uid="uid://disqah0hi1cr5" path="res://Interior Textures/BathroomFull_7.png" id="19_bveux"]
+[ext_resource type="AudioStream" uid="uid://bhlp0rj4833du" path="res://Sounds/ambiance.mp3" id="22_ltcsn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vvbs8"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -1404,3 +1405,9 @@ skeleton = NodePath("")
 transform = Transform3D(-4.37114e-06, -100, -4.37114e-06, 0, -4.37114e-06, 100, -100, 4.37114e-06, 1.91069e-13, 12.0307, 0.934852, -14.3905)
 mesh = SubResource("ArrayMesh_j3e5s")
 skeleton = NodePath("")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.44958, 7.08477, -8.62176)
+stream = ExtResource("22_ltcsn")
+autoplay = true
+max_distance = 50.0
