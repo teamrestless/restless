@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=4 uid="uid://cq5pvog1yjfyr"]
+[gd_scene load_steps=107 format=4 uid="uid://cq5pvog1yjfyr"]
 
 [ext_resource type="PackedScene" uid="uid://bu71ueljsosch" path="res://Scenes/ui.tscn" id="1_cywlo"]
 [ext_resource type="Texture2D" uid="uid://dnn7h06lk42k8" path="res://Interior Textures/Concrete.png" id="1_vvbs8"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b4mobodfgdc3v" path="res://Scenes/player.tscn" id="9_c85p7"]
 [ext_resource type="Texture2D" uid="uid://btf31wbmrxtep" path="res://Textures/floor_2.png" id="10_svvko"]
 [ext_resource type="Texture2D" uid="uid://dlie62m4a5tbd" path="res://Textures/concrete_1.jpg" id="11_hppqq"]
+[ext_resource type="PackedScene" uid="uid://c4n3ylhpq5bsv" path="res://Scenes/flashlight.tscn" id="11_ltcsn"]
 [ext_resource type="Texture2D" uid="uid://b8iv7dx7hlhkb" path="res://Textures/tiles_floor_1.png" id="12_n8lcm"]
 [ext_resource type="Texture2D" uid="uid://oxf5uvj0iq11" path="res://Textures/wood_1.png" id="13_eacpm"]
 [ext_resource type="Texture2D" uid="uid://bowalgptci52l" path="res://Textures/glass_bottle_1.png" id="14_l7at7"]
@@ -757,6 +758,20 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_tf05j")
 
+[sub_resource type="GDScript" id="GDScript_4xbi6"]
+script/source = "extends MeshInstance3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mu8i"]
 resource_name = "wood_3"
 vertex_color_use_as_albedo = true
@@ -1269,7 +1284,7 @@ mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
 [node name="wall_1_plain3" type="MeshInstance3D" parent="Wall"]
-transform = Transform3D(-5, -2.8486e-14, -8.74228e-08, 0, 2, -1.62921e-07, 4.37114e-07, -3.25841e-07, -1, 10.1586, 0, -20.3584)
+transform = Transform3D(-5, -2.8486e-14, -8.74228e-08, 0, 2, -1.62921e-07, 4.37114e-07, -3.25841e-07, -1, 10.1532, -0.0296452, -20.3402)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
@@ -1303,9 +1318,6 @@ transform = Transform3D(-2.18557e-07, 0, -1, 0, 2, 0, 5, 0, -4.37114e-08, 40.242
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="Player" parent="Wall" instance=ExtResource("9_c85p7")]
-transform = Transform3D(1.73, 0, 0, 0, 1.73, 0, 0, 0, 1.73, 9.41798, 1.67763, -9.54217)
-
 [node name="Floor" type="Node3D" parent="."]
 
 [node name="floor_ceiling_3" type="MeshInstance3D" parent="Floor"]
@@ -1323,6 +1335,22 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/floor_ceiling_4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_vvbs8")
 
+[node name="floor_ceiling_5" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(5.54, 0, 0, 0, 1.108, -4.5129e-06, 0, 9.0258e-07, 5.54, 10.363, 6.072, -10.203)
+mesh = SubResource("ArrayMesh_ii015")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor/floor_ceiling_5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/floor_ceiling_5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_vvbs8")
+
+[node name="flashlight" parent="." instance=ExtResource("11_ltcsn")]
+transform = Transform3D(-0.128421, 0, -0.166157, 0, 0.21, 0, 0.166157, 0, -0.128421, 1.92557, 1.69664, -15.0331)
+
+[node name="player" parent="." instance=ExtResource("9_c85p7")]
+transform = Transform3D(1.73, 0, 0, 0, 1.73, 0, 0, 0, 1.73, 9.41798, 1.67763, -9.54217)
+
 [node name="table_large_1" type="MeshInstance3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, -4.88762e-07, 0, 4.88762e-07, 3, 12.2873, 0, -18.4018)
 mesh = SubResource("ArrayMesh_ds5ll")
@@ -1332,6 +1360,7 @@ skeleton = NodePath("")
 transform = Transform3D(-0.206172, -1.74991e-08, -0.633985, 1.36315e-07, 0.666667, -6.27306e-08, 0.633985, -1.49032e-07, -0.206172, -0.567559, 0.968412, 0.125788)
 mesh = SubResource("ArrayMesh_jkd0g")
 skeleton = NodePath("")
+script = SubResource("GDScript_4xbi6")
 
 [node name="chair" type="MeshInstance3D" parent="table_large_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.84217e-14, 0, -2.84217e-14, 1, 0.0542445, 1.50183e-07, 0.921815)
@@ -1340,9 +1369,11 @@ skeleton = NodePath("")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.86427, 4.8457, -7.9668)
+visible = false
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3101, 9.6914, -12.0746)
+visible = false
 
 [node name="bathroom" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.7997, 0, -3.82884)
