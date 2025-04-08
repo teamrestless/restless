@@ -6,7 +6,7 @@ func _ready():
 	int_text = get_node("/root/" + get_tree().current_scene.name + "/UI/interact_text")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta):
 	if is_colliding():
 		var hit = get_collider()
 		if hit != null:
