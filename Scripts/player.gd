@@ -8,6 +8,7 @@ var SPRINT_SPEED = 7.0
 const JUMP_VELOCITY = 4.5
 var sprint_slider
 
+
 func _ready():
 	ORIGINAL_SPEED = SPEED
 	sprint_slider = get_node("/root/" + get_tree().current_scene.name + "/UI/sprint_slider")
