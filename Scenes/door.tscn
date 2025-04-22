@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://6bjwxfwnm22o"]
+[gd_scene load_steps=11 format=4 uid="uid://gyc2ta0ojitv"]
 
 [ext_resource type="Texture2D" uid="uid://xo0yysqb63xy" path="res://Textures/door_5.png" id="1_p0e35"]
 [ext_resource type="Script" uid="uid://n8borwrsssq7" path="res://Scripts/door.gd" id="2_fahql"]
@@ -104,9 +104,11 @@ _data = {
 
 [node name="StaticBody3D" type="StaticBody3D" parent="hinge"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 2
 script = ExtResource("2_fahql")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="hinge/StaticBody3D"]
+visible = false
 shape = SubResource("ConcavePolygonShape3D_opu1l")
 
 [node name="door" type="MeshInstance3D" parent="hinge/StaticBody3D"]
