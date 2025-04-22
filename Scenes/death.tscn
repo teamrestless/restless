@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2tdfcwtkjlcl"]
+
+[ext_resource type="Script" uid="uid://k2b0gf11lr3" path="res://Scripts/death.gd" id="1_g62mh"]
+
+[node name="Death" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g62mh")
+scene_name = "level0"
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 653.0
+color = Color(0, 0, 0, 1)
+
+[node name="death_text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 482.0
+offset_top = 279.0
+offset_right = 692.0
+offset_bottom = 366.0
+theme_override_font_sizes/normal_font_size = 62
+text = "DEATH"

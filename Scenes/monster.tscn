@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://u7yja86vtxhm"]
+[gd_scene load_steps=5 format=3 uid="uid://bokqabo7s1bfs"]
 
-[ext_resource type="Script" uid="uid://bbwj08pcv0ufc" path="res://Scripts/monster.gd" id="1_i44lo"]
+[ext_resource type="Script" path="res://Scripts/monster.gd" id="1_i44lo"]
 [ext_resource type="Material" uid="uid://dl2o0sbnwxaka" path="res://Materials/flashlight.tres" id="2_hyvb2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpp4a"]
