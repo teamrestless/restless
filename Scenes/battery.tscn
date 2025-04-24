@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ibd7banb0had"]
+
+[ext_resource type="Script" uid="uid://dboincnm4drid" path="res://Scripts/battery.gd" id="1_mjabg"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_23u8t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l2pcn"]
+
+[node name="battery" type="StaticBody3D"]
+script = ExtResource("1_mjabg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_23u8t")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.758767, 0)
+mesh = SubResource("CylinderMesh_23u8t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.21379, 0, 0, 0, 1, 0, 0.0970318, 0)
+shape = SubResource("BoxShape3D_l2pcn")

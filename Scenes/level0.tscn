@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=4 uid="uid://cq5pvog1yjfyr"]
+[gd_scene load_steps=131 format=4 uid="uid://cq5pvog1yjfyr"]
 
 [ext_resource type="PackedScene" uid="uid://bu71ueljsosch" path="res://Scenes/ui.tscn" id="1_cywlo"]
 [ext_resource type="Script" uid="uid://fd4dvi1s5xwr" path="res://Scripts/level_manager.gd" id="1_s0mwq"]
@@ -26,6 +26,8 @@
 [ext_resource type="AudioStream" uid="uid://bhlp0rj4833du" path="res://Sounds/ambiance.mp3" id="22_ltcsn"]
 [ext_resource type="PackedScene" uid="uid://bokqabo7s1bfs" path="res://Scenes/monster.tscn" id="24_whklr"]
 [ext_resource type="Script" uid="uid://c5h3oxmpko26s" path="res://Scripts/monster_spawner.gd" id="25_whklr"]
+[ext_resource type="PackedScene" uid="uid://ibd7banb0had" path="res://Scenes/battery.tscn" id="27_c85p7"]
+[ext_resource type="AudioStream" uid="uid://8s1oiy6qbabj" path="res://Sounds/object_pickup.mp3" id="28_svvko"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vvbs8"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -1255,7 +1257,7 @@ visible = false
 [node name="Player" parent="." instance=ExtResource("9_c85p7")]
 transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 9.41798, 1.67763, -9.54217)
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="ambiance" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.45021, 7.08119, -8.62396)
 stream = ExtResource("22_ltcsn")
 autoplay = true
@@ -1559,5 +1561,16 @@ monster = NodePath("../Monster")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="monster_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.77323, -0.223417, -0.449213, -0.511278)
 shape = SubResource("BoxShape3D_s0mwq")
+
+[node name="battery" parent="." instance=ExtResource("27_c85p7")]
+transform = Transform3D(-0.00337657, -0.0915749, 0.0400329, 0.099943, -0.00309385, 0.00135251, 1.76951e-09, 0.0400557, 0.0916272, 12.7353, 1.89841, -18.0206)
+
+[node name="battery2" parent="." instance=ExtResource("27_c85p7")]
+transform = Transform3D(-0.00337657, -0.0915749, 0.0400329, 0.099943, -0.00309385, 0.00135251, 1.76951e-09, 0.0400557, 0.0916272, 2.34012, 1.71792, -15.8234)
+
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="obj_pickup" type="AudioStreamPlayer3D" parent="Sounds"]
+stream = ExtResource("28_svvko")
 
 [connection signal="body_entered" from="monster_spawner" to="monster_spawner" method="spawn_monster"]
