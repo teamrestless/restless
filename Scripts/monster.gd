@@ -24,6 +24,8 @@ func _physics_process(delta: float) -> void:
 		distance = player.global_transform.origin.distance_to(global_transform.origin)
 		if distance <= 2 && caught == false:
 			player.visible = false
+			if !$jumpscare.playing:
+				$jumpscare.play()
 			SPEED = 0
 			caught = true
 			$jumpscare_camera.current = true

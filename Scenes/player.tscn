@@ -1540,6 +1540,7 @@ stream = ExtResource("4_fkybt")
 
 [node name="Camera3D" type="Camera3D" parent="head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0714719, 0)
+cull_mask = 1032191
 
 [node name="RayCast3D" type="RayCast3D" parent="head"]
 transform = Transform3D(1.33, 0, 0, 0, -5.81361e-08, -1.33, 0, 1.33, -5.81361e-08, 0.00151455, 0, -0.500752)
