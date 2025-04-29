@@ -8,12 +8,17 @@ var SPRINT_SPEED = 7.0
 const JUMP_VELOCITY = 4.5
 var sprint_slider
 
+@onready var animation_tree : AnimationTree = $AnimationTree
+var blend_value : = 0.0
 
 func _ready():
 	ORIGINAL_SPEED = SPEED
 	sprint_slider = get_node("/root/" + get_tree().current_scene.name + "/UI/sprint_slider")
+	animation_tree.active = true
+	
 
 func _process(delta):
+	update_animation_parameters()
 	if SPEED == SPRINT_SPEED:
 		sprint_slider.value = sprint_slider.value - sprint_drain_amount * delta
 		if sprint_slider.value == sprint_slider.min_value:
@@ -23,6 +28,7 @@ func _process(delta):
 			sprint_slider.value = sprint_slider.value + sprint_refresh_amount * delta
 		if sprint_slider.value == sprint_slider.max_value:
 			sprint_slider.visible = false
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -51,3 +57,18 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+func update_animation_parameters():
+	# Use Vector3.ZERO for 3D characters
+	if velocity == Vector3.ZERO:
+		animation_tree["parameters/StateMachine/conditions/Idle"] = true
+		animation_tree["parameters/StateMachine/conditions/Is Moving"] = false
+	else:
+		animation_tree["parameters/StateMachine/conditions/Idle"] = false
+		animation_tree["parameters/StateMachine/conditions/Is Moving"] = true
+	if Input.is_action_pressed("sprint"):
+		animation_tree["parameters/StateMachine/conditions/Running"] = true
+		animation_tree["parameters/StateMachine/conditions/Is Moving"] = false
+	if Input.is_action_just_released("sprint"):
+		animation_tree["parameters/StateMachine/conditions/Running"] = false
+		animation_tree["parameters/StateMachine/conditions/Is Moving"] = true
