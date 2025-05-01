@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bu71ueljsosch"]
+[gd_scene load_steps=3 format=3 uid="uid://bu71ueljsosch"]
+
+[ext_resource type="Texture2D" uid="uid://d1frhsy31uqim" path="res://Textures/battery_empty.png" id="1_jxero"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_so63c"]
 
@@ -30,3 +32,37 @@ offset_right = 343.0
 offset_bottom = 152.0
 theme_override_font_sizes/normal_font_size = 40
 text = "[E] Interact"
+
+[node name="flashlight_ui" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="flashlight_slider" type="HSlider" parent="flashlight_ui"]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 28.0
+offset_right = 1123.0
+offset_bottom = 97.0
+theme_override_icons/grabber = SubResource("ImageTexture_so63c")
+max_value = 1.0
+step = 0.0
+value = 1.0
+
+[node name="flashlight_text" type="RichTextLabel" parent="flashlight_ui"]
+layout_mode = 0
+offset_left = 917.0
+offset_top = 14.0
+offset_right = 1136.0
+offset_bottom = 56.0
+theme_override_font_sizes/normal_font_size = 25
+text = "Flashlight Energy"
+
+[node name="BatteryIndicator" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = 988.0
+offset_top = 10.0
+offset_right = 1138.0
+offset_bottom = 62.0
+texture = ExtResource("1_jxero")

@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx4lni68fvkmf"]
+
+[ext_resource type="Script" uid="uid://dbtck1hy2ksim" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
+
+[node name="pause_menu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_emv3i")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 650.0
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 381.0
+offset_top = 41.0
+offset_right = 782.0
+offset_bottom = 181.0
+theme_override_font_sizes/normal_font_size = 100
+text = "PAUSED"
+
+[node name="resume_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 193.0
+offset_right = 767.0
+offset_bottom = 271.0
+theme_override_font_sizes/font_size = 40
+text = "RESUME"
+
+[node name="settings_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 280.0
+offset_right = 767.0
+offset_bottom = 358.0
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS"
+
+[node name="controls_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 369.0
+offset_right = 767.0
+offset_bottom = 447.0
+theme_override_font_sizes/font_size = 40
+text = "CONTROLS"
+
+[node name="menu_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 457.0
+offset_right = 767.0
+offset_bottom = 535.0
+theme_override_font_sizes/font_size = 40
+text = "QUIT TO MENU"
+
+[node name="quit_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 542.0
+offset_right = 767.0
+offset_bottom = 620.0
+theme_override_font_sizes/font_size = 40
+text = "QUIT GAME"
+
+[connection signal="pressed" from="resume_button" to="." method="resume"]
+[connection signal="pressed" from="menu_button" to="." method="back_to_menu"]
+[connection signal="pressed" from="quit_button" to="." method="quit_game"]

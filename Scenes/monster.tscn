@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bokqabo7s1bfs"]
+
+[ext_resource type="Script" uid="uid://bbwj08pcv0ufc" path="res://Scripts/monster.gd" id="1_i44lo"]
+[ext_resource type="Material" uid="uid://dl2o0sbnwxaka" path="res://Materials/flashlight.tres" id="2_hyvb2"]
+[ext_resource type="AudioStream" uid="uid://5anuwlaho3de" path="res://Sounds/jumpscare.mp3" id="3_hyvb2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpp4a"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xhoai"]
+
+[node name="Monster" type="CharacterBody3D" groups=["monster"]]
+script = ExtResource("1_i44lo")
+scene_name = "death"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rpp4a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_xhoai")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.116108, 0, 0, 0, 1, 0, 0.558945, -0.165769)
+material_override = ExtResource("2_hyvb2")
+mesh = SubResource("CapsuleMesh_xhoai")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+
+[node name="jumpscare_camera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.57299, -1.05387)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="jumpscare_camera"]
+layers = 16384
+light_energy = 0.5
+omni_range = 2.0
+
+[node name="jumpscare" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_hyvb2")
+volume_db = -35.0
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="on_navigation_agent_3d_velocity_computed"]
