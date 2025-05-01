@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5dhvvytppu4n"]
+
+[ext_resource type="Script" uid="uid://dgu7vo8oxtyxo" path="res://Scripts/battery_pickup.gd" id="1_6txkh"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6txkh"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kdyqv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bewm2"]
+
+[node name="BatteryPickup" type="StaticBody3D"]
+script = ExtResource("1_6txkh")
+
+[node name="model" type="Node3D" parent="."]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="model"]
+mesh = SubResource("CylinderMesh_6txkh")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="model"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.759, 0)
+mesh = SubResource("CylinderMesh_kdyqv")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.284, 0, 0, 0, 0.626, 0, 0, 0, 0.284, 0, 0, 0)
+shape = SubResource("BoxShape3D_bewm2")
+
+[node name="PickupSound" type="AudioStreamPlayer3D" parent="."]

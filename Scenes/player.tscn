@@ -2,12 +2,35 @@
 
 [ext_resource type="Script" uid="uid://c1sc5nkdpgma" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://blwntahms2egd" path="res://Scripts/camera.gd" id="2_6t5aa"]
-[ext_resource type="Script" uid="uid://cpw5w2rmnb02j" path="res://Scripts/flashlight.gd" id="3_6t5aa"]
 [ext_resource type="AudioStream" uid="uid://builvbbchjf61" path="res://Sounds/flashlight_on.mp3" id="4_fkybt"]
 [ext_resource type="Script" uid="uid://l8sfvffds4m3" path="res://Scripts/raycast.gd" id="4_vgqql"]
 [ext_resource type="PackedScene" uid="uid://cxefj3uoabfpb" path="res://Models/Characters/Main_Character_Headless.glb" id="6_x3wgy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+
+[sub_resource type="GDScript" id="GDScript_fkybt"]
+script/source = "extends SpotLight3D
+
+var picked_up = false
+var flashlight_ui
+var flashlight_energy
+var drain_rate = 0.1
+
+func _ready() -> void:
+	flashlight_ui = get_node(\"/root/\" + get_tree().current_scene.name + \"/UI/flashlight_ui\")
+	flashlight_energy = get_node(\"/root/\" + get_tree().current_scene.name + \"/UI/flashlight_ui/flashlight_slider\")
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"flashlight\") && picked_up == true && flashlight_energy.value > 0:
+		visible = !visible
+		flashlight_ui.visible = visible
+		$toggle.play()
+	if visible:
+		flashlight_energy.value -= drain_rate * delta
+	if flashlight_energy.value == 0 && visible == true:
+		visible = false
+		flashlight_ui.visible = false
+"
 
 [sub_resource type="Animation" id="Animation_bg5sm"]
 resource_name = "Walking"
@@ -1508,7 +1531,6 @@ states/End/position = Vector2(894, 100)
 transitions = ["Start", "Animations1_Walking", SubResource("AnimationNodeStateMachineTransition_8erm5")]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_x3wgy"]
-graph_offset = Vector2(-487.765, 73.0608)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_x3wgy")
 nodes/Animation/position = Vector2(-140, 120)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_f1ek2")
@@ -1528,22 +1550,25 @@ shape = SubResource("CapsuleShape3D_sh265")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.585295, -0.0189779)
 script = ExtResource("2_6t5aa")
 
-[node name="flashlight" type="SpotLight3D" parent="head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0160995, -0.490335)
-visible = false
-spot_range = 15.0
-spot_angle = 25.0
-script = ExtResource("3_6t5aa")
-
-[node name="toggle" type="AudioStreamPlayer3D" parent="head/flashlight"]
-stream = ExtResource("4_fkybt")
-
 [node name="Camera3D" type="Camera3D" parent="head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0714719, 0)
 cull_mask = 1032191
 
-[node name="RayCast3D" type="RayCast3D" parent="head"]
-transform = Transform3D(1.33, 0, 0, 0, -5.81361e-08, -1.33, 0, 1.33, -5.81361e-08, 0.00151455, 0, -0.500752)
+[node name="flashlight" type="SpotLight3D" parent="head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0553724, -0.490335)
+visible = false
+spot_range = 15.0
+spot_angle = 25.0
+script = SubResource("GDScript_fkybt")
+
+[node name="toggle" type="AudioStreamPlayer3D" parent="head/Camera3D/flashlight"]
+stream = ExtResource("4_fkybt")
+
+[node name="FlashlightDamageRaycast" type="RayCast3D" parent="head/Camera3D"]
+target_position = Vector3(0, 0, -15)
+
+[node name="InteractionRaycast" type="RayCast3D" parent="head/Camera3D"]
+transform = Transform3D(3.11, 0, 0, 0, -1.35942e-07, -3.11, 0, 3.11, -1.35942e-07, 0.00151455, -0.0714719, -0.500752)
 collision_mask = 3
 script = ExtResource("4_vgqql")
 
@@ -1559,3 +1584,5 @@ libraries = {
 root_node = NodePath("../Main_Character_Headless")
 tree_root = SubResource("AnimationNodeBlendTree_x3wgy")
 anim_player = NodePath("../Main_Character_Headless/AnimationPlayer")
+
+[node name="EmptyClickSound" type="AudioStreamPlayer3D" parent="."]

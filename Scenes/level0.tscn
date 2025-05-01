@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=4 uid="uid://cq5pvog1yjfyr"]
+[gd_scene load_steps=134 format=4 uid="uid://cq5pvog1yjfyr"]
 
 [ext_resource type="PackedScene" uid="uid://bu71ueljsosch" path="res://Scenes/ui.tscn" id="1_cywlo"]
 [ext_resource type="Script" uid="uid://fd4dvi1s5xwr" path="res://Scripts/level_manager.gd" id="1_s0mwq"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://dgsjgtwymjxui" path="res://Interior Textures/Bedside table.png" id="3_4xbi6"]
 [ext_resource type="PackedScene" uid="uid://bx4lni68fvkmf" path="res://Scenes/pause_menu.tscn" id="3_sh51g"]
 [ext_resource type="Texture2D" uid="uid://dlolu7dmd5tlg" path="res://Interior Textures/BoockShelf.png" id="4_ltcsn"]
+[ext_resource type="Texture2D" uid="uid://ckh82wxw2sslg" path="res://Textures/battery_full.png" id="5_n8lcm"]
 [ext_resource type="Texture2D" uid="uid://i1f2x3lysmoy" path="res://Interior Textures/sofa_1_fabric_1.png" id="5_opu1l"]
+[ext_resource type="Texture2D" uid="uid://d1frhsy31uqim" path="res://Textures/battery_empty.png" id="6_eacpm"]
 [ext_resource type="Texture2D" uid="uid://bu0q8wltjim7m" path="res://Textures/wall_mp_1.png" id="6_s0mwq"]
 [ext_resource type="Texture2D" uid="uid://dalg0o2v3ft2k" path="res://Textures/metal_mp_6.png" id="7_whklr"]
 [ext_resource type="PackedScene" uid="uid://b4mobodfgdc3v" path="res://Scenes/player.tscn" id="9_c85p7"]
@@ -26,7 +28,8 @@
 [ext_resource type="AudioStream" uid="uid://bhlp0rj4833du" path="res://Sounds/ambiance.mp3" id="22_ltcsn"]
 [ext_resource type="PackedScene" uid="uid://bokqabo7s1bfs" path="res://Scenes/monster.tscn" id="24_whklr"]
 [ext_resource type="Script" uid="uid://c5h3oxmpko26s" path="res://Scripts/monster_spawner.gd" id="25_whklr"]
-[ext_resource type="PackedScene" uid="uid://ibd7banb0had" path="res://Scenes/battery.tscn" id="27_c85p7"]
+[ext_resource type="PackedScene" uid="uid://dgauy5h7b406p" path="res://Scenes/totem.tscn" id="28_eacpm"]
+[ext_resource type="PackedScene" uid="uid://c5dhvvytppu4n" path="res://Scenes/battery_pickup.tscn" id="28_n8lcm"]
 [ext_resource type="AudioStream" uid="uid://8s1oiy6qbabj" path="res://Sounds/object_pickup.mp3" id="28_svvko"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vvbs8"]
@@ -1233,6 +1236,7 @@ shadow_mesh = SubResource("ArrayMesh_iujvy")
 
 [node name="level" type="Node3D"]
 script = ExtResource("1_s0mwq")
+battery_pickup_scene = ExtResource("28_n8lcm")
 
 [node name="UI" parent="." instance=ExtResource("1_cywlo")]
 
@@ -1256,321 +1260,335 @@ visible = false
 
 [node name="Player" parent="." instance=ExtResource("9_c85p7")]
 transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 9.41798, 1.67763, -9.54217)
+battery_full_texture = ExtResource("5_n8lcm")
+battery_empty_texture = ExtResource("6_eacpm")
 
-[node name="ambiance" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.45021, 7.08119, -8.62396)
-stream = ExtResource("22_ltcsn")
-autoplay = true
-max_distance = 50.0
+[node name="Environment" type="Node3D" parent="."]
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment"]
 navigation_mesh = SubResource("NavigationMesh_ltcsn")
 
-[node name="Cabinet" type="Node3D" parent="NavigationRegion3D"]
+[node name="Cabinet" type="Node3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(2, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 2, 0, 0, -2.35)
 
-[node name="Door2" type="MeshInstance3D" parent="NavigationRegion3D/Cabinet"]
+[node name="Door2" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Cabinet"]
 transform = Transform3D(81.5635, 0, 0, 0, -2.40027e-05, 100, 0, -100.675, -2.38419e-05, 1.42111, 3.0674, 1.0184)
 material_override = SubResource("StandardMaterial3D_no4c2")
 mesh = SubResource("ArrayMesh_4arys")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Cabinet/Door2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Cabinet/Door2"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Cabinet/Door2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Cabinet/Door2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_ltcsn")
 
-[node name="Door1" type="MeshInstance3D" parent="NavigationRegion3D/Cabinet"]
+[node name="Door1" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Cabinet"]
 transform = Transform3D(81.5635, 0, 0, 0, -2.38419e-05, 100, 0, -100, -2.38419e-05, 1.42719, 2.77631, -1.57315)
 material_override = SubResource("StandardMaterial3D_evib2")
 mesh = SubResource("ArrayMesh_tereu")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Cabinet/Door1"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Cabinet/Door1"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Cabinet/Door1/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Cabinet/Door1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_opu1l")
 
-[node name="Shelf" type="MeshInstance3D" parent="NavigationRegion3D/Cabinet"]
+[node name="Shelf" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Cabinet"]
 transform = Transform3D(88.7731, 0, 0, 0, -2.487e-05, 70.6287, 0, -104.312, -1.68392e-05, 0.880252, 3.00559, -0.306267)
 material_override = SubResource("StandardMaterial3D_cg7th")
 mesh = SubResource("ArrayMesh_imku0")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Cabinet/Shelf"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Cabinet/Shelf"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Cabinet/Shelf/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Cabinet/Shelf/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_s0mwq")
 
-[node name="Frame" type="MeshInstance3D" parent="NavigationRegion3D/Cabinet"]
+[node name="Frame" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Cabinet"]
 transform = Transform3D(86.4655, 0, 0, 0, -2.38419e-05, 100, 0, -100, -2.38419e-05, 0.867393, 1.01591, -0.274358)
 material_override = SubResource("StandardMaterial3D_ncvlp")
 mesh = SubResource("ArrayMesh_wlxy5")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Cabinet/Frame"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Cabinet/Frame"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Cabinet/Frame/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Cabinet/Frame/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_whklr")
 
-[node name="Sofa" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Sofa" type="MeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(-2.68944e-06, -61.5273, -2.68944e-06, 0, -2.68944e-06, 61.5273, -61.5273, 2.68944e-06, 1.17559e-13, 12.2774, 1.18313, -1.71483)
 material_override = SubResource("StandardMaterial3D_vqwgl")
 mesh = SubResource("ArrayMesh_ealrb")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Sofa"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Sofa"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Sofa/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Sofa/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_cywlo")
 
-[node name="Wall" type="Node3D" parent="NavigationRegion3D"]
+[node name="Wall" type="Node3D" parent="Environment/NavigationRegion3D"]
 
-[node name="wall_1_plain" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(5, 0, 0, 0, 2, -1.62921e-07, 0, 3.25841e-07, 1, 10.1586, 0, -0.0483561)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hppqq")
 debug_fill = false
 
-[node name="wall_1_plain2" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain2" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(-1.74846e-07, 0, 1, 0, 2, 0, -4, 0, -4.37114e-08, 20.4653, 0, -4.04854)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain2"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_n8lcm")
 debug_fill = false
 
-[node name="wall_1_plain3" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain3" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(-5, -2.8486e-14, -8.74228e-08, 0, 2, -1.62921e-07, 4.37114e-07, -3.25841e-07, -1, 10.1532, -0.0296452, -20.3402)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain3"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain3/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_eacpm")
 debug_fill = false
 
-[node name="wall_1_plain4" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain4" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(-5, -2.8486e-14, -8.74228e-08, 0, 2, -1.62921e-07, 4.37114e-07, -3.25841e-07, -1, 30.3066, 0, -20.382)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain4"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain4/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_l7at7")
 debug_fill = false
 
-[node name="wall_1_plain5" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain5" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(-2.18557e-07, 0, 1, 0, 2, 0, -5, 0, -4.37114e-08, 0.28024, -1.90735e-06, -10.2008)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain5"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain5"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain5/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain5/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_esfvx")
 debug_fill = false
 
-[node name="wall_1_plain6" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain6" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(5, 0, 0, 0, 2, -1.62921e-07, 0, 3.25841e-07, 1, 30.4578, 0, -0.0483561)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain6"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain6"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain6/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain6/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_r5hho")
 debug_fill = false
 
-[node name="wall_1_plain7" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="wall_1_plain7" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(-2.18557e-07, 0, -1, 0, 2, 0, 5, 0, -4.37114e-08, 40.2422, -1.90735e-06, -10.2008)
 mesh = SubResource("ArrayMesh_kdn7p")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/wall_1_plain7"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain7"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/wall_1_plain7/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/wall_1_plain7/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_lk370")
 debug_fill = false
 
-[node name="doorway_1_plain" type="MeshInstance3D" parent="NavigationRegion3D/Wall"]
+[node name="doorway_1_plain" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Wall"]
 transform = Transform3D(-8.74228e-08, 0, 1, 0, 2, 0, -2, 0, -4.37114e-08, 20.4321, 0, -16.1456)
 mesh = SubResource("ArrayMesh_jsnrv")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall/doorway_1_plain"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Wall/doorway_1_plain"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/doorway_1_plain/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Wall/doorway_1_plain/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_vpvdp")
 debug_fill = false
 
-[node name="Floor" type="Node3D" parent="NavigationRegion3D"]
+[node name="Floor" type="Node3D" parent="Environment/NavigationRegion3D"]
 
-[node name="floor_ceiling_3" type="MeshInstance3D" parent="NavigationRegion3D/Floor"]
+[node name="floor_ceiling_3" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Floor"]
 transform = Transform3D(5, 0, 0, 0, 1, -1.62921e-07, 0, 8.14603e-07, 5, 30.3803, 0, -10.2347)
 mesh = SubResource("ArrayMesh_2ub71")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Floor/floor_ceiling_3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Floor/floor_ceiling_3"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor/floor_ceiling_3/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Floor/floor_ceiling_3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bveux")
 debug_fill = false
 
-[node name="floor_ceiling_4" type="MeshInstance3D" parent="NavigationRegion3D/Floor"]
+[node name="floor_ceiling_4" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Floor"]
 transform = Transform3D(5, 0, 0, 0, 1, -1.62921e-07, 0, 8.14603e-07, 5, 10.3628, 0, -10.2027)
 mesh = SubResource("ArrayMesh_ii015")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Floor/floor_ceiling_4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Floor/floor_ceiling_4"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor/floor_ceiling_4/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Floor/floor_ceiling_4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_vvbs8")
 debug_fill = false
 
-[node name="table_large_1" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="table_large_1" type="MeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1.91, 0, 0, 0, 1.91, -3.11178e-07, 0, 3.11178e-07, 1.91, 12.2873, 0, -18.4018)
 mesh = SubResource("ArrayMesh_ds5ll")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/table_large_1"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/table_large_1"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/table_large_1/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/table_large_1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_tgiyu")
 debug_fill = false
 
-[node name="chair" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="chair" type="MeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1.91, 0, 0, 0, 1.91, -3.11178e-07, 0, 3.11178e-07, 1.91, 12.3909, 5.40012e-13, -16.6411)
 mesh = SubResource("ArrayMesh_nk0ol")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/chair"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/chair"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/chair/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/chair/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_q7grt")
 
-[node name="Bed" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Bed" type="MeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(4.08431e-06, -48.9841, -6.15645e-06, -1.02108e-06, -5.83936e-06, 41.3152, -34.2617, -2.91968e-06, 0, 2.62513, 0.882802, -18.3127)
 material_override = SubResource("StandardMaterial3D_vtuh1")
 mesh = SubResource("ArrayMesh_tcnuu")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Bed"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/Bed"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Bed/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Bed/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_sh51g")
 
-[node name="BedsideTable" type="Node3D" parent="NavigationRegion3D"]
+[node name="BedsideTable" type="Node3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53275, 0, -20.8473)
 
-[node name="Cube_009" type="MeshInstance3D" parent="NavigationRegion3D/BedsideTable"]
+[node name="Cube_009" type="MeshInstance3D" parent="Environment/NavigationRegion3D/BedsideTable"]
 transform = Transform3D(71.5851, 0, 0, 0, -2.38419e-05, 100, 0, -100, -2.38419e-05, 3.61883, 1.05068, 5.48756)
 material_override = SubResource("StandardMaterial3D_rb6va")
 mesh = SubResource("ArrayMesh_tuemg")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/BedsideTable/Cube_009"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/BedsideTable/Cube_009"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/BedsideTable/Cube_009/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/BedsideTable/Cube_009/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_c85p7")
 
-[node name="Cube_010" type="MeshInstance3D" parent="NavigationRegion3D/BedsideTable"]
+[node name="Cube_010" type="MeshInstance3D" parent="Environment/NavigationRegion3D/BedsideTable"]
 transform = Transform3D(71.5851, 0, 0, 0, -2.38419e-05, 100, 0, -100, -2.38419e-05, 4.07356, 1.21459, 5.47789)
 material_override = SubResource("StandardMaterial3D_2te8w")
 mesh = SubResource("ArrayMesh_i0g27")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/BedsideTable/Cube_010"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/NavigationRegion3D/BedsideTable/Cube_010"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/BedsideTable/Cube_010/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/BedsideTable/Cube_010/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_svvko")
 
-[node name="door" parent="." instance=ExtResource("9_ltcsn")]
+[node name="door" parent="Environment" instance=ExtResource("9_ltcsn")]
 transform = Transform3D(-8.74228e-08, 0, 1, 0, 2, 0, -2, 0, -4.37114e-08, 20.4321, 3.82138e-15, -17.1456)
 
-[node name="ceiling" type="MeshInstance3D" parent="."]
+[node name="ceiling" type="MeshInstance3D" parent="Environment"]
 transform = Transform3D(5.54, 0, 0, 0, 1.108, -4.5129e-06, 0, 9.0258e-07, 5.54, 10.363, 6.072, -10.203)
 visible = false
 mesh = SubResource("ArrayMesh_ii015")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="ceiling"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/ceiling"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ceiling/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/ceiling/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_vvbs8")
 debug_fill = false
 
-[node name="flashlight" parent="." instance=ExtResource("11_ltcsn")]
-transform = Transform3D(-0.128421, 0, -0.166157, 0, 0.21, 0, 0.166157, 0, -0.128421, 1.92557, 1.69664, -15.0331)
+[node name="flashlight" parent="Environment" instance=ExtResource("11_ltcsn")]
+transform = Transform3D(-0.165113, 0, -0.21363, 0, 0.27, 0, 0.21363, 0, -0.165113, 1.92557, 1.69664, -15.0331)
 
-[node name="glass_bottle_1" type="MeshInstance3D" parent="."]
+[node name="glass_bottle_1" type="MeshInstance3D" parent="Environment"]
 transform = Transform3D(-0.393789, -3.34233e-08, -1.21091, 6.30792e-08, 1.27333, -5.56592e-08, 1.21091, -7.71987e-08, -0.393789, 11.2033, 1.84967, -18.1615)
 mesh = SubResource("ArrayMesh_jkd0g")
 skeleton = NodePath("")
 script = SubResource("GDScript_4xbi6")
 
-[node name="bathroom" type="Node3D" parent="."]
+[node name="bathroom" type="Node3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.7997, 0, -3.82884)
 
-[node name="WhitePorcelainToilet_001" type="MeshInstance3D" parent="bathroom"]
+[node name="WhitePorcelainToilet_001" type="MeshInstance3D" parent="Environment/bathroom"]
 transform = Transform3D(-100, -1.10735e-06, 8.67186e-06, 0, -99.1946, -12.6666, 8.74228e-06, -12.6666, 99.1946, 1.38857, 2.4736, 3.02788)
 material_override = SubResource("StandardMaterial3D_jie2m")
 mesh = SubResource("ArrayMesh_s0gvp")
 skeleton = NodePath("")
 
-[node name="WhitePorcelainToilet" type="MeshInstance3D" parent="bathroom"]
+[node name="WhitePorcelainToilet" type="MeshInstance3D" parent="Environment/bathroom"]
 transform = Transform3D(-100, 8.74228e-06, 3.82137e-13, 0, -4.37114e-06, 100, 8.74228e-06, 100, 4.37114e-06, 1.60557, 1.16074, 2.17667)
 material_override = SubResource("StandardMaterial3D_65h7p")
 mesh = SubResource("ArrayMesh_vxd74")
 skeleton = NodePath("")
 
-[node name="MedicineCabinetDoor" type="MeshInstance3D" parent="bathroom"]
+[node name="MedicineCabinetDoor" type="MeshInstance3D" parent="Environment/bathroom"]
 transform = Transform3D(-1.47998, 99.989, 4.37066e-06, -3.85583e-14, -4.37114e-06, 100, 99.9891, 1.47998, 6.46921e-08, 17.386, 4.67829, -2.5533)
 mesh = SubResource("ArrayMesh_dhlwf")
 skeleton = NodePath("")
 
-[node name="WashingBasinWhiteSteel" type="MeshInstance3D" parent="bathroom"]
+[node name="WashingBasinWhiteSteel" type="MeshInstance3D" parent="Environment/bathroom"]
 transform = Transform3D(-100, 1.31134e-05, 3.82137e-13, 0, -6.55671e-06, 100, 8.74228e-06, 150, 4.37114e-06, 15.7909, 2.43726, -1.658)
 mesh = SubResource("ArrayMesh_5t8nk")
 skeleton = NodePath("")
 
-[node name="BathTubWhitePorcelain" type="MeshInstance3D" parent="bathroom"]
+[node name="BathTubWhitePorcelain" type="MeshInstance3D" parent="Environment/bathroom"]
 transform = Transform3D(-4.37114e-06, -100, -4.37114e-06, 0, -4.37114e-06, 100, -100, 4.37114e-06, 1.91069e-13, 12.0307, 0.934852, -14.3905)
 mesh = SubResource("ArrayMesh_j3e5s")
 skeleton = NodePath("")
 
-[node name="Monster" parent="." instance=ExtResource("24_whklr")]
+[node name="Monster" parent="Environment" instance=ExtResource("24_whklr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.8217, 1.07216, -2.33971)
 visible = false
+totem_scene = ExtResource("28_eacpm")
 
-[node name="monster_spawner" type="Area3D" parent="." node_paths=PackedStringArray("monster")]
+[node name="monster_spawner" type="Area3D" parent="Environment" node_paths=PackedStringArray("monster")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1588, 2.8511, -15.5928)
 script = ExtResource("25_whklr")
 monster = NodePath("../Monster")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="monster_spawner"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/monster_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.77323, -0.223417, -0.449213, -0.511278)
 shape = SubResource("BoxShape3D_s0mwq")
 
-[node name="battery" parent="." instance=ExtResource("27_c85p7")]
-transform = Transform3D(-0.00337657, -0.0915749, 0.0400329, 0.099943, -0.00309385, 0.00135251, 1.76951e-09, 0.0400557, 0.0916272, 12.7353, 1.89841, -18.0206)
-
-[node name="battery2" parent="." instance=ExtResource("27_c85p7")]
-transform = Transform3D(-0.00337657, -0.0915749, 0.0400329, 0.099943, -0.00309385, 0.00135251, 1.76951e-09, 0.0400557, 0.0916272, 2.34012, 1.71792, -15.8234)
-
 [node name="Sounds" type="Node3D" parent="."]
+
+[node name="ambiance" type="AudioStreamPlayer3D" parent="Sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.45021, 7.08119, -8.62396)
+stream = ExtResource("22_ltcsn")
+autoplay = true
+max_distance = 50.0
 
 [node name="obj_pickup" type="AudioStreamPlayer3D" parent="Sounds"]
 stream = ExtResource("28_svvko")
 
-[connection signal="body_entered" from="monster_spawner" to="monster_spawner" method="spawn_monster"]
+[node name="Marker3D" type="Marker3D" parent="." groups=["battery_spawn_points"]]
+transform = Transform3D(3.93, 0, 0, 0, 3.93, 0, 0, 0, 3.93, 9.0577, 0.193183, -1.37187)
+
+[node name="Marker3D2" type="Marker3D" parent="." groups=["battery_spawn_points"]]
+transform = Transform3D(3.93, 0, 0, 0, 3.93, 0, 0, 0, 3.93, 1.15664, 0.193183, -6.2164)
+
+[node name="Marker3D3" type="Marker3D" parent="." groups=["battery_spawn_points"]]
+transform = Transform3D(3.93, 0, 0, 0, 3.93, 0, 0, 0, 3.93, 10.434, 0.193183, -18.1368)
+
+[node name="Marker3D4" type="Marker3D" parent="." groups=["battery_spawn_points"]]
+transform = Transform3D(3.93, 0, 0, 0, 3.93, 0, 0, 0, 3.93, 12.447, 1.27588, -16.4655)
+
+[node name="Marker3D5" type="Marker3D" parent="." groups=["battery_spawn_points"]]
+transform = Transform3D(3.93, 0, 0, 0, 3.93, 0, 0, 0, 3.93, 12.9815, 1.89013, -17.8139)
+
+[connection signal="body_entered" from="Environment/monster_spawner" to="Environment/monster_spawner" method="spawn_monster"]

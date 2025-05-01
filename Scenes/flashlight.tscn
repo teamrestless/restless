@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c4n3ylhpq5bsv"]
 
 [ext_resource type="Material" uid="uid://dl2o0sbnwxaka" path="res://Materials/flashlight.tres" id="1_4mde1"]
-[ext_resource type="Script" path="res://Scripts/pickup_flashlight.gd" id="1_dhxhs"]
+[ext_resource type="Script" uid="uid://bubepmxllsuxl" path="res://Scripts/pickup_flashlight.gd" id="1_dhxhs"]
 [ext_resource type="Material" uid="uid://drdl088to8bxs" path="res://Materials/flashlight_top.tres" id="2_ao81v"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_imeen"]
