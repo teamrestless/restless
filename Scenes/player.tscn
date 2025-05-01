@@ -2971,9 +2971,9 @@ libraries = {
 root_node = NodePath("../Main_Character_Headless")
 tree_root = SubResource("AnimationNodeBlendTree_x3wgy")
 anim_player = NodePath("../Main_Character_Headless/AnimationPlayer")
-
-[node name="EmptyClickSound" type="AudioStreamPlayer3D" parent="."]
 parameters/StateMachine/conditions/Idle = false
 "parameters/StateMachine/conditions/Is Moving" = false
 parameters/StateMachine/conditions/Running = false
 parameters/StateMachine/BlendSpace1D/blend_position = 0
+
+[node name="EmptyClickSound" type="AudioStreamPlayer3D" parent="."]

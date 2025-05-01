@@ -30,6 +30,9 @@ signal flashlight_used
 @export var battery_full_texture: Texture
 @export var battery_empty_texture: Texture
 
+@onready var animation_tree : AnimationTree = $AnimationTree
+var blend_value : = 0.0
+
 # --- (Rest of the player.gd code: _ready, _physics_process, _use_flash, etc.) ---
 # REMEMBER TO REMOVE the _input function handling mouse look from player.gd,
 # as it's handled by camera.gd on the 'head' node.
@@ -41,6 +44,7 @@ func _ready():
 	flashlight_raycast.exclude_parent = true
 	update_battery_ui()
 	sprint_slider.visible = false
+	animation_tree.active = true
 
 func _input(event: InputEvent) -> void:
 	# Handle mouse look (keep your existing code from camera.gd if it's here,
@@ -54,27 +58,6 @@ func _input(event: InputEvent) -> void:
 			# Play empty sound if trying to flash without charge
 			if empty_sound:
 				empty_sound.play()
-@onready var animation_tree : AnimationTree = $AnimationTree
-var blend_value : = 0.0
-
-func _ready():
-	ORIGINAL_SPEED = SPEED
-	sprint_slider = get_node("/root/" + get_tree().current_scene.name + "/UI/sprint_slider")
-	animation_tree.active = true
-	
-
-func _process(delta):
-	update_animation_parameters()
-	if SPEED == SPRINT_SPEED:
-		sprint_slider.value = sprint_slider.value - sprint_drain_amount * delta
-		if sprint_slider.value == sprint_slider.min_value:
-			SPEED = ORIGINAL_SPEED
-	if SPEED != SPRINT_SPEED:
-		if sprint_slider.value < sprint_slider.max_value:
-			sprint_slider.value = sprint_slider.value + sprint_refresh_amount * delta
-		if sprint_slider.value == sprint_slider.max_value:
-			sprint_slider.visible = false
-
 
 func _physics_process(delta: float) -> void:
 	# --- Movement Code ---
@@ -191,6 +174,7 @@ func update_battery_ui():
 
 # --- Sprint logic ---
 func _process(delta):
+	update_animation_parameters()
 	if SPEED == SPRINT_SPEED:
 		sprint_slider.value = sprint_slider.value - sprint_drain_amount * delta
 		if sprint_slider.value == sprint_slider.min_value:
@@ -200,6 +184,7 @@ func _process(delta):
 			sprint_slider.value = sprint_slider.value + sprint_refresh_amount * delta
 		if sprint_slider.value == sprint_slider.max_value:
 			sprint_slider.visible = false
+
 func update_animation_parameters():
 	# Use Vector3.ZERO for 3D characters
 	if velocity == Vector3.ZERO:
