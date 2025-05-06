@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://cua3bbdrff7wm"]
+
+[ext_resource type="PackedScene" uid="uid://bpdahgbaw2pge" path="res://Models/FBX/floor_ceiling_2.fbx" id="1_jgkgd"]
+[ext_resource type="PackedScene" uid="uid://ba6bqhg87mpyt" path="res://Models/FBX/metal_barrel_mp_1.fbx" id="2_bs12r"]
+[ext_resource type="PackedScene" uid="uid://cv2dccq62e8kh" path="res://Models/FBX/walkie_talkie_1.fbx" id="3_rqhku"]
+[ext_resource type="PackedScene" uid="uid://c5dubddfub21t" path="res://Models/FBX/metal_barrel_mp_2.fbx" id="4_cpkqv"]
+[ext_resource type="PackedScene" uid="uid://cteuj8q5bjxpi" path="res://Models/FBX/tunnel_1.fbx" id="5_d1mwp"]
+[ext_resource type="PackedScene" uid="uid://dmkcwvqdyxn3e" path="res://Models/FBX/wall_1_tunnel_hole_2.fbx" id="6_u1b78"]
+[ext_resource type="PackedScene" uid="uid://pn3s28mwywl" path="res://Models/FBX/vending_machine_1.fbx" id="7_bdr3p"]
+[ext_resource type="PackedScene" uid="uid://bxk3brb52ibyi" path="res://Models/FBX/jerrycan_1.fbx" id="8_wwu6c"]
+[ext_resource type="PackedScene" uid="uid://dhrrbnon3q460" path="res://Models/FBX/cardboard_box_2.fbx" id="9_yymuf"]
+
+[node name="Level1" type="Node3D"]
+
+[node name="floor_ceiling_2" parent="." instance=ExtResource("1_jgkgd")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="floor_ceiling_3" parent="." instance=ExtResource("1_jgkgd")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -8.0354)
+
+[node name="metal_barrel_mp_1" parent="." instance=ExtResource("2_bs12r")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 3.31088, 0, -6.6592)
+
+[node name="walkie_talkie_1" parent="metal_barrel_mp_1" instance=ExtResource("3_rqhku")]
+transform = Transform3D(-0.546522, 0.0683926, 0.375607, 0.082782, 0.661507, 0, -0.3727, 0.0466403, -0.550785, 0.0578303, 1.09047, -0.121895)
+
+[node name="metal_barrel_mp_2" parent="." instance=ExtResource("4_cpkqv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -2.33397, 9.53674e-07, 0.631672)
+
+[node name="tunnel_1" parent="." instance=ExtResource("5_d1mwp")]
+transform = Transform3D(4, 0, 0, 0, 3, 0, 0, 0, 4, 0.521563, 0, -0.713222)
+
+[node name="wall_1_tunnel_hole_3" parent="." instance=ExtResource("6_u1b78")]
+transform = Transform3D(4, 0, 0, 0, 3, 0, 0, 0, 3, 0.366196, 0, -12.9847)
+
+[node name="wall_1_tunnel_hole_4" parent="." instance=ExtResource("6_u1b78")]
+transform = Transform3D(4, 0, 0, 0, 3, 0, 0, 0, 3, 0.366196, 0, 11.1483)
+
+[node name="vending_machine_1" parent="." instance=ExtResource("7_bdr3p")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -2.01112, 0, -11.5673)
+
+[node name="jerrycan_1" parent="." instance=ExtResource("8_wwu6c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.02757, 0, -12.0575)
+
+[node name="cardboard_box_2" parent="." instance=ExtResource("9_yymuf")]
+transform = Transform3D(0.832419, 0, -0.554147, 0, 1, 0, 0.554147, 0, 0.832419, -1.677, -2.38419e-07, -4.40162)
+
+[node name="floor_ceiling_4" parent="." instance=ExtResource("1_jgkgd")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 8.66236)
+
+[node name="cardboard_box_3" parent="." instance=ExtResource("9_yymuf")]
+transform = Transform3D(0.832419, 0, -0.554147, 0, 1, 0, 0.554147, 0, 0.832419, 3.10016, -7.15256e-07, 5.43343)
