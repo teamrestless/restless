@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cavbe0vn8p81f"]
+[gd_scene load_steps=3 format=3 uid="uid://cavbe0vn8p81f"]
 
 [ext_resource type="Script" uid="uid://4q1npccepr81" path="res://Scripts/win_menu.gd" id="1_k38nj"]
+[ext_resource type="Texture2D" uid="uid://b6iatumoaxr3n" path="res://Textures/win_bg.png" id="2_3al15"]
 
 [node name="win_menu" type="Control"]
 layout_mode = 3
@@ -21,6 +22,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,3 +33,12 @@ theme_override_font_sizes/normal_font_size = 101
 text = "YOU WIN!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 355.0
+offset_top = 188.0
+offset_right = 2116.0
+offset_bottom = 1596.0
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("2_3al15")

@@ -2950,11 +2950,13 @@ script = SubResource("GDScript_fkybt")
 stream = ExtResource("4_fkybt")
 
 [node name="FlashlightDamageRaycast" type="RayCast3D" parent="head/Camera3D"]
-target_position = Vector3(0, 0, -15)
+transform = Transform3D(8.78, 0, 0, 0, 8.78, 0, 0, 0, 8.78, 0, 0, 0)
+target_position = Vector3(0, 0, -5)
 
 [node name="InteractionRaycast" type="RayCast3D" parent="head/Camera3D"]
-transform = Transform3D(3.11, 0, 0, 0, -1.35942e-07, -3.11, 0, 3.11, -1.35942e-07, 0.00151455, -0.0714719, -0.500752)
+transform = Transform3D(9.23, 0, 0, 0, -4.03456e-07, -9.23, 0, 9.23, -4.03456e-07, 0.00151455, -0.00939763, -0.00232146)
 collision_mask = 3
+debug_shape_custom_color = Color(0.760784, 0, 0, 0.121569)
 script = ExtResource("4_vgqql")
 
 [node name="Main_Character_Headless" parent="." instance=ExtResource("6_x3wgy")]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bx4lni68fvkmf"]
+[gd_scene load_steps=3 format=3 uid="uid://bx4lni68fvkmf"]
 
 [ext_resource type="Script" uid="uid://dbtck1hy2ksim" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
+[ext_resource type="Texture2D" uid="uid://b31abff2w8cgb" path="res://Textures/pause_bg.png" id="2_k0w1u"]
 
 [node name="pause_menu" type="Control"]
 process_mode = 3
@@ -16,9 +17,10 @@ script = ExtResource("1_emv3i")
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 650.0
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.466667)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 381.0
 offset_top = 41.0
@@ -27,25 +29,42 @@ offset_bottom = 181.0
 theme_override_font_sizes/normal_font_size = 100
 text = "PAUSED"
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.99997
+offset_top = 2.99998
+offset_right = 1922.0
+offset_bottom = 1083.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_k0w1u")
+
 [node name="resume_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 401.0
-offset_top = 193.0
-offset_right = 767.0
-offset_bottom = 271.0
+offset_left = 470.0
+offset_top = 292.0
+offset_right = 884.0
+offset_bottom = 354.0
+scale = Vector2(0.58, 0.58)
 theme_override_font_sizes/font_size = 40
-text = "RESUME"
 
 [node name="settings_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 401.0
-offset_top = 280.0
-offset_right = 767.0
-offset_bottom = 358.0
+offset_left = 470.0
+offset_top = 328.0
+offset_right = 710.0
+offset_bottom = 364.0
 theme_override_font_sizes/font_size = 40
-text = "SETTINGS"
+
+[node name="menu_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 364.0
+offset_right = 710.0
+offset_bottom = 399.0
+theme_override_font_sizes/font_size = 40
 
 [node name="controls_button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 401.0
 offset_top = 369.0
@@ -54,23 +73,13 @@ offset_bottom = 447.0
 theme_override_font_sizes/font_size = 40
 text = "CONTROLS"
 
-[node name="menu_button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 401.0
-offset_top = 457.0
-offset_right = 767.0
-offset_bottom = 535.0
-theme_override_font_sizes/font_size = 40
-text = "QUIT TO MENU"
-
 [node name="quit_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 401.0
-offset_top = 542.0
-offset_right = 767.0
-offset_bottom = 620.0
+offset_left = 470.0
+offset_top = 399.0
+offset_right = 710.0
+offset_bottom = 434.0
 theme_override_font_sizes/font_size = 40
-text = "QUIT GAME"
 
 [connection signal="pressed" from="resume_button" to="." method="resume"]
 [connection signal="pressed" from="menu_button" to="." method="back_to_menu"]

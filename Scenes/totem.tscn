@@ -6,11 +6,15 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_53tes"]
 
-[node name="totem" type="StaticBody3D"]
+[node name="totem" type="RigidBody3D"]
 script = ExtResource("1_53tes")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="TotemMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_5jdnj")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="PhysicsCollisionShape" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_53tes")
+
+[node name="PickupArea" type="Area3D" parent="."]
+
+[node name="PickupCollisionShape" type="CollisionShape3D" parent="PickupArea"]
