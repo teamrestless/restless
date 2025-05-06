@@ -1,12 +1,77 @@
-[gd_scene load_steps=6 format=3 uid="uid://bokqabo7s1bfs"]
+[gd_scene load_steps=18 format=3 uid="uid://bokqabo7s1bfs"]
 
 [ext_resource type="Script" uid="uid://bbwj08pcv0ufc" path="res://Scripts/monster.gd" id="1_i44lo"]
-[ext_resource type="Material" uid="uid://dl2o0sbnwxaka" path="res://Materials/flashlight.tres" id="2_hyvb2"]
 [ext_resource type="AudioStream" uid="uid://5anuwlaho3de" path="res://Sounds/jumpscare.mp3" id="3_hyvb2"]
+[ext_resource type="AnimationLibrary" uid="uid://bhjhkgmiv6ae6" path="res://Models/Characters/Animations/Monster_Animations.res" id="4_cyu0s"]
+[ext_resource type="PackedScene" uid="uid://cs4dedmhtvm7f" path="res://Scenes/sight_boss.tscn" id="4_ujuxu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpp4a"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_xhoai"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ujuxu"]
+animation = &"Monster_Animations/B_Idle"
+use_custom_timeline = true
+timeline_length = 4.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6ks7b"]
+animation = &"Monster_Animations/B_Spotplayer"
+use_custom_timeline = true
+timeline_length = 2.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cyu0s"]
+animation = &"Monster_Animations/B_Run"
+use_custom_timeline = true
+timeline_length = 0.75
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ks7b"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bua6k"]
+advance_mode = 2
+advance_condition = &"Running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_auidl"]
+advance_mode = 2
+advance_condition = &"Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ko0n3"]
+advance_mode = 2
+advance_condition = &"AttackP"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yc8mp"]
+advance_mode = 2
+advance_condition = &"Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1mxyj"]
+advance_mode = 2
+advance_condition = &"AttackP"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dfc53"]
+advance_mode = 2
+advance_condition = &"Running"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ujuxu"]
+states/Idle/node = SubResource("AnimationNodeAnimation_ujuxu")
+states/Idle/position = Vector2(508, 44)
+states/Kill_Player/node = SubResource("AnimationNodeAnimation_6ks7b")
+states/Kill_Player/position = Vector2(593, 141)
+states/Run/node = SubResource("AnimationNodeAnimation_cyu0s")
+states/Run/position = Vector2(423, 141)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_6ks7b"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_bua6k"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_auidl"), "Idle", "Kill_Player", SubResource("AnimationNodeStateMachineTransition_ko0n3"), "Kill_Player", "Idle", SubResource("AnimationNodeStateMachineTransition_yc8mp"), "Run", "Kill_Player", SubResource("AnimationNodeStateMachineTransition_1mxyj"), "Kill_Player", "Run", SubResource("AnimationNodeStateMachineTransition_dfc53")]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_cyu0s"]
+graph_offset = Vector2(-133, 163)
+nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_ujuxu")
+nodes/StateMachine/position = Vector2(0, 140)
+node_connections = [&"output", 0, &"StateMachine"]
 
 [node name="Monster" type="CharacterBody3D" groups=["monster"]]
 script = ExtResource("1_i44lo")
@@ -15,19 +80,11 @@ scene_name = "death"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_rpp4a")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_xhoai")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.116108, 0, 0, 0, 1, 0, 0.558945, -0.165769)
-material_override = ExtResource("2_hyvb2")
-mesh = SubResource("CapsuleMesh_xhoai")
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
 
 [node name="jumpscare_camera" type="Camera3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.57299, -1.05387)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.27186, -3.00992)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="jumpscare_camera"]
 layers = 16384
@@ -37,5 +94,21 @@ omni_range = 2.0
 [node name="jumpscare" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_hyvb2")
 volume_db = -35.0
+
+[node name="Sight_Boss" parent="." instance=ExtResource("4_ujuxu")]
+transform = Transform3D(-0.35, 0, -5.28485e-08, 0, 0.35, 0, 5.28485e-08, 0, -0.35, 0, -1.07149, 0)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Sight_Boss"]
+libraries = {
+&"Monster_Animations": ExtResource("4_cyu0s")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Sight_Boss")
+tree_root = SubResource("AnimationNodeBlendTree_cyu0s")
+anim_player = NodePath("../Sight_Boss/AnimationPlayer2")
+parameters/StateMachine/conditions/AttackP = false
+parameters/StateMachine/conditions/Idle = false
+parameters/StateMachine/conditions/Running = false
 
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="on_navigation_agent_3d_velocity_computed"]

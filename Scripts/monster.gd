@@ -25,13 +25,16 @@ var is_stunned: bool = false
 
 @export var scene_name: String
 @export var totem_scene: PackedScene # Assign your Totem.tscn in the Inspector
+@onready var animation_tree : AnimationTree = $AnimationTree
 
 func _ready():
 	player = get_node("/root/" + get_tree().current_scene.name + "/Player")
 	add_to_group("monsters")
 	print("Monster added to group 'monsters': ", is_in_group("monsters")) # DEBUG
+	animation_tree.active = true
 
 func _physics_process(delta: float) -> void:
+	update_animation_parameters()
 	# --- Apply gravity first (usually safe even if stunned/caught) ---
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -71,6 +74,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		velocity.z = 0
 		move_and_slide()
+	
 
 func _jumpscare():
 	player.visible = false
@@ -227,3 +231,20 @@ func die():
 	# Remove Monster AFTER potentially waiting for animations/sounds or spawning totem
 	print("  - Monster queue_free() called.") # DEBUG
 	queue_free()
+	
+func update_animation_parameters():
+	if velocity == Vector3.ZERO:
+		animation_tree["parameters/StateMachine/conditions/Idle"] = true
+		animation_tree["parameters/StateMachine/conditions/Running"] = false
+		animation_tree["parameters/StateMachine/conditions/AttackP"] = true
+	else:
+		animation_tree["parameters/StateMachine/conditions/Idle"] = false
+		animation_tree["parameters/StateMachine/conditions/Running"] = true
+		animation_tree["parameters/StateMachine/conditions/AttackP"] = false
+		
+	if $jumpscare.playing:
+		animation_tree["parameters/StateMachine/conditions/AttackP"] = true
+		animation_tree["parameters/StateMachine/conditions/Running"] = false
+		animation_tree["parameters/StateMachine/conditions/Idle"] = false
+	else:
+		animation_tree["parameters/StateMachine/conditions/AttackP"] = false
