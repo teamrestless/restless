@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://gntypuxkjjpx"
-path="res://.godot/imported/wooden_crate_2.fbx-2ad59939e0be935b8783cb51ea30a09c.scn"
+path="res://.godot/imported/wooden_crate_2.fbx-8a632ef9ebe51431632bf6f17d3e2898.scn"
 
 [deps]
 
-source_file="res://Models/FBX/wooden_crate_2.fbx"
-dest_files=["res://.godot/imported/wooden_crate_2.fbx-2ad59939e0be935b8783cb51ea30a09c.scn"]
+source_file="res://wooden_crate_2.fbx"
+dest_files=["res://.godot/imported/wooden_crate_2.fbx-8a632ef9ebe51431632bf6f17d3e2898.scn"]
 
 [params]
 
